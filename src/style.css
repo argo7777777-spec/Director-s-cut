@@ -77,6 +77,12 @@ code{font-family:ui-monospace,Consolas,"NotoSC","Paperlogy",monospace;font-size:
 .benefit h3{font-size:18px;font-weight:800;margin:0 0 6px;color:#fff}
 .benefit ul{margin:0;padding-left:1.1em;font-size:15.5px}
 .benefit li{color:var(--d-muted)}
+.events{width:100%;border-collapse:collapse;margin-top:10px;font-size:14px;line-height:1.5}
+.events th,.events td{border:1px solid var(--navy-line);padding:8px 10px;text-align:left;vertical-align:middle;color:var(--d-muted)}
+.events thead th{background:rgba(255,255,255,.07);color:#fff;font-weight:600;white-space:nowrap}
+.events tbody th{color:#fff;font-weight:600;white-space:nowrap}
+.ev-note{font-size:13px;line-height:1.55;color:var(--d-muted);margin:10px 0 0}
+.ev-note+.ev-note{margin-top:4px}
 .phone{width:260px;border-radius:32px;border:6px solid var(--navy-line);overflow:hidden;background:#fff}
 .phone svg{display:block;width:100%;height:auto}
 .fig-cap{font-size:13px;line-height:1.5;color:var(--d-muted);margin-top:10px}
@@ -124,6 +130,13 @@ footer a{color:#fff}
   .phone{margin:0 auto}
   .video-card{flex-direction:column;align-items:stretch}
   .video-thumb{width:100%}
+  .benefit{padding:16px}
+  .events,.events tbody,.events tr,.events th,.events td{display:block;border:0}
+  .events thead{display:none}
+  .events tr{border-top:1px solid var(--navy-line);padding:10px 0}
+  .events tbody th{padding:8px 0 2px;font-size:12px;letter-spacing:.06em;color:var(--pink)}
+  .events td{padding:2px 0}
+  .events td:first-of-type{color:#fff;font-weight:600}
 }
 @page{margin:0}
 @media print{.lang-toggle{display:none}}
