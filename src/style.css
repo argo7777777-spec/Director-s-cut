@@ -73,7 +73,7 @@ code{font-family:ui-monospace,Consolas,"NotoSC","Paperlogy",monospace;font-size:
 /* 02 지원 사항 */
 .benefits{display:grid;grid-template-columns:1fr 260px;gap:28px;align-items:start}
 .benefit{border:1px solid var(--navy-line);background:rgba(255,255,255,.04);border-radius:14px;padding:18px 20px}
-.benefit+.benefit{margin-top:12px}
+.benefit.wide{margin-bottom:12px}
 .benefit h3{font-size:18px;font-weight:800;margin:0 0 6px;color:#fff}
 .benefit ul{margin:0;padding-left:1.1em;font-size:15.5px}
 .benefit li{color:var(--d-muted)}
