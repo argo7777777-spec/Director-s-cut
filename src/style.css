@@ -94,30 +94,24 @@ code{font-family:ui-monospace,Consolas,"NotoSC","Paperlogy",monospace;font-size:
 .steps{list-style:none;counter-reset:s;margin:0;padding:0;display:grid;gap:10px}
 .steps li{counter-increment:s;position:relative;border:1px solid var(--line);border-radius:12px;padding:14px 16px 14px 56px;font-size:16px}
 .steps li::before{content:counter(s);position:absolute;left:16px;top:15px;width:26px;height:26px;border-radius:50%;background:var(--purple);color:#fff;font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center}
-.doc-card{border:1px solid var(--line);border-radius:14px;padding:18px 20px}
+.doc-card{display:block;border:1px solid var(--line);border-radius:14px;padding:18px 20px;color:var(--red-ink);font-size:17px;font-weight:800;text-decoration:none}
+.doc-card:hover{border-color:#f6c1cb;background:#fff9fa}
 .doc-card+.doc-card{margin-top:12px}
-.doc-card h3{font-size:18px;font-weight:800;margin:0 0 4px}
-.doc-card p{margin:0 0 6px;color:var(--muted);font-size:15.5px}
-.doc-card a{color:var(--red-ink);font-weight:600;text-decoration:none;font-size:15px}
-.tag{display:inline-block;font-size:12px;font-weight:600;color:var(--red-ink);border:1px solid currentColor;border-radius:999px;padding:1px 8px;margin-left:8px;vertical-align:2px}
+.text-link{color:var(--red-ink);font-weight:600}
 .warn{margin-top:16px;background:#fff4f6;border:1px solid #f6c1cb;border-radius:12px;padding:14px 18px;font-size:15.5px;color:#7a1027}
 .warn p{margin:0}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:28px}
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .chip{font-size:14px;border:1px solid var(--line);background:#fff;border-radius:999px;padding:4px 12px}
 .chip.no{color:var(--red-ink);border-color:#f6c1cb}
-.fee{border:1px solid var(--line);background:#fff;border-radius:14px;padding:18px 20px}
-.fee .big{font-size:30px;font-weight:800;line-height:1.2;color:var(--navy)}
-.fee p{font-size:15px}
 .small{font-size:14.5px;color:var(--muted)}
 .channels{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .channel{border:1px solid var(--line);border-radius:14px;padding:16px 18px}
 .channel.wide{grid-column:1/-1}
 .channel h3{font-size:17px;font-weight:800;margin:0 0 4px}
 .channel p{font-size:15px;line-height:1.6;color:var(--muted);margin:0}
-.shortlink{margin-top:16px;background:var(--navy);color:#fff;border-radius:12px;padding:16px 20px;font-size:15.5px}
-.shortlink p{margin:0}
-.shortlink code{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.25);color:#fff}
+.channel.tip{background:rgba(107,76,255,.06);border-color:rgba(107,76,255,.3);border-left:3px solid var(--purple)}
+.channel.tip p{color:var(--ink)}
+.channel.tip code{background:#fff}
 
 footer{background:var(--navy);color:var(--d-muted);padding:28px 0;font-size:14px}
 footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
@@ -126,7 +120,7 @@ footer a{color:#fff}
 @media (max-width:640px){
   .wrap{padding:0 20px}
   .hero h1{font-size:36px}
-  .keys,.two,.channels,.benefits{grid-template-columns:1fr}
+  .keys,.channels,.benefits{grid-template-columns:1fr}
   .phone{margin:0 auto}
   .video-card{flex-direction:column;align-items:stretch}
   .video-thumb{width:100%}
