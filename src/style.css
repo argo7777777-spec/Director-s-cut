@@ -46,7 +46,7 @@ code{font-family:ui-monospace,Consolas,"NotoSC","Paperlogy",monospace;font-size:
 .btn{display:inline-flex;align-items:center;gap:6px;font-size:15px;font-weight:600;padding:12px 20px;border-radius:999px;text-decoration:none}
 .btn.primary{background:#fff;color:var(--navy)}
 .btn.ghost{border:1px solid #8a86b8;color:#fff}
-.keys{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:40px}
+.keys{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:40px}
 .key{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.05);border-radius:14px;padding:16px}
 .key b{display:block;font-size:17px;font-weight:800;color:#fff}
 .key span{font-size:14px;line-height:1.5;color:var(--d-muted)}
@@ -129,7 +129,8 @@ footer a{color:#fff}
 @media (max-width:640px){
   .wrap{padding:0 20px}
   .hero h1{font-size:36px}
-  .keys,.channels{grid-template-columns:1fr}
+  .channels{grid-template-columns:1fr}
+  .keys{grid-template-columns:1fr 1fr}
   .video-card{flex-direction:column;align-items:stretch}
   .video-thumb{width:100%}
   .benefit{padding:16px}
