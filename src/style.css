@@ -42,6 +42,7 @@ code{font-family:ui-monospace,Consolas,"NotoSC","Paperlogy",monospace;font-size:
 .badge.red{background:var(--red-ink)} /* --red(#e8204a) 위 흰 13px 글자는 4.43:1로 AA 미달 → 진한 레드 */
 .hero h1{font-size:52px;line-height:1.1;font-weight:800;margin:14px 0;letter-spacing:-.01em;color:#fff}
 .lede{font-size:20px;color:var(--d-muted);margin:0;max-width:30em}
+.lede[lang="ko"]{max-width:none}
 .ctas{display:flex;gap:10px;margin-top:28px;flex-wrap:wrap}
 .btn{display:inline-flex;align-items:center;gap:6px;font-size:15px;font-weight:600;padding:12px 20px;border-radius:999px;text-decoration:none}
 .btn.primary{background:#fff;color:var(--navy)}
@@ -129,6 +130,7 @@ footer a{color:#fff}
 @media (max-width:640px){
   .wrap{padding:0 20px}
   .hero h1{font-size:36px}
+  .br-pc{display:none}
   .channels{grid-template-columns:1fr}
   .keys{grid-template-columns:1fr 1fr}
   .video-card{flex-direction:column;align-items:stretch}
