@@ -25,6 +25,7 @@ a{color:inherit}
 p{margin:0 0 14px}
 code{font-family:ui-monospace,Consolas,"NotoSC","Paperlogy",monospace;font-size:.9em;background:var(--soft);border:1px solid var(--line);border-radius:5px;padding:1px 6px}
 .placeholder{display:none}
+.nowrap{white-space:nowrap}
 
 /* 다크 구간 */
 .dark{background-color:var(--navy-2);color:var(--d-ink)}
