@@ -115,6 +115,8 @@ code{font-family:ui-monospace,Consolas,"NotoSC","Paperlogy",monospace;font-size:
 .channel.wide{grid-column:1/-1}
 .channel h3{font-size:17px;font-weight:800;margin:0 0 4px}
 .channel p{font-size:15px;line-height:1.6;color:var(--muted);margin:0}
+.channel ul{margin:6px 0 0;padding-left:1.1em;font-size:15px;line-height:1.6;color:var(--muted)}
+.channel li+li{margin-top:4px}
 .channel.tip{background:rgba(107,76,255,.06);border-color:rgba(107,76,255,.3);border-left:3px solid var(--purple)}
 .channel.tip p{color:var(--ink)}
 .channel.tip code{background:#fff}
