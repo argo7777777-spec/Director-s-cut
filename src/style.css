@@ -50,6 +50,7 @@ code{font-family:ui-monospace,Consolas,"NotoSC","Paperlogy",monospace;font-size:
 .hero h1{font-size:52px;line-height:1.1;font-weight:800;margin:14px 0;letter-spacing:-.01em;color:#fff}
 .lede{font-size:20px;color:var(--d-muted);margin:0;max-width:30em}
 .lede[lang="ko"]{max-width:none}
+.lede-link{color:#fff;text-decoration:underline;text-underline-offset:3px;text-decoration-color:rgba(255,255,255,.5)}
 .ctas{display:flex;gap:10px;margin-top:28px;flex-wrap:wrap}
 .btn{display:inline-flex;align-items:center;gap:6px;font-size:15px;font-weight:600;padding:12px 20px;border-radius:999px;text-decoration:none}
 .btn.primary{background:#fff;color:var(--navy)}
