@@ -12,18 +12,20 @@ PNG_1PX = base64.b64decode(
 
 
 def test_sets_ok():
-    html = '<div><p lang="ko">가</p><p lang="en">A</p><p lang="zh-Hans">甲</p></div>'
+    html = '<div><p lang="ko">가</p><p lang="en">A</p><p lang="zh-Hans">甲</p><p lang="ja">あ</p></div>'
     assert bundle.check_lang_sets(html) == []
 
 
 def test_sets_inline_spans_and_nested():
     html = ('<ul><li><span lang="ko">가</span><span lang="en">A</span><span lang="zh-Hans">甲</span>'
-            '<ul><li lang="ko">나</li><li lang="en">B</li><li lang="zh-Hans">乙</li></ul></li></ul>')
+            '<span lang="ja">あ</span>'
+            '<ul><li lang="ko">나</li><li lang="en">B</li><li lang="zh-Hans">乙</li><li lang="ja">い</li></ul></li></ul>')
     assert bundle.check_lang_sets(html) == []
 
 
 def test_sets_void_sibling_does_not_break_set():
-    html = '<div><img src="x.png"><p lang="ko">가</p><p lang="en">A</p><p lang="zh-Hans">甲</p></div>'
+    html = ('<div><img src="x.png"><p lang="ko">가</p><p lang="en">A</p><p lang="zh-Hans">甲</p>'
+            '<p lang="ja">あ</p></div>')
     assert bundle.check_lang_sets(html) == []
 
 
@@ -35,6 +37,12 @@ def test_sets_missing_en():
 def test_sets_missing_zh():
     errors = bundle.check_lang_sets('<div><p lang="ko">가</p><p lang="en">A</p></div>')
     assert len(errors) == 2 and "zh-Hans" in errors[0]
+
+
+def test_sets_missing_ja():
+    errors = bundle.check_lang_sets(
+        '<div><p lang="ko">가</p><p lang="en">A</p><p lang="zh-Hans">甲</p></div>')
+    assert len(errors) == 3 and "lang=ja" in errors[0]
 
 
 def test_sets_wrong_order():
@@ -86,7 +94,7 @@ def test_build_inlines_everything(tmp_path):
     (src / "index.html").write_text(
         '<html><head><link rel="stylesheet" href="style.css"></head>'
         '<body><img src="assets/a.png"><p lang="ko">가</p><p lang="en">A</p>'
-        '<p lang="zh-Hans">甲</p></body></html>',
+        '<p lang="zh-Hans">甲</p><p lang="ja">あ</p></body></html>',
         encoding="utf-8")
     out = bundle.build(src, tmp_path / "dist" / "o.html")
     html = out.read_text(encoding="utf-8")
@@ -113,7 +121,7 @@ def _make_src(tmp_path, css, body, head=""):
     (src / "style.css").write_text(css, encoding="utf-8")
     (src / "index.html").write_text(
         '<html><head><link rel="stylesheet" href="style.css">%s</head><body>%s'
-        '<p lang="ko">가</p><p lang="en">A</p><p lang="zh-Hans">甲</p></body></html>' % (head, body),
+        '<p lang="ko">가</p><p lang="en">A</p><p lang="zh-Hans">甲</p><p lang="ja">あ</p></body></html>' % (head, body),
         encoding="utf-8")
     return src
 

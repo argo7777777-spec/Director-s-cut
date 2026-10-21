@@ -1,6 +1,6 @@
 """src/ → dist/DirectorsCut.html 단일 파일 빌드.
 
-CSS·이미지·폰트(본문에 쓰인 글자만 남긴 Paperlogy WOFF2)를 전부 인라인해
+CSS·이미지·폰트(본문에 쓰인 글자만 남긴 WOFF2)를 전부 인라인해
 외부 요청 없이 열리는 HTML 한 개를 만든다.
 """
 import base64
@@ -20,11 +20,11 @@ VOID = {"area", "base", "br", "col", "embed", "hr", "img", "input",
         "link", "meta", "source", "track", "wbr"}
 MIME = {".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg"}
 CSS_LINK = '<link rel="stylesheet" href="style.css">'
-LANGS = ("ko", "en", "zh-Hans")
+LANGS = ("ko", "en", "zh-Hans", "ja")
 
 
 class _LangSets(HTMLParser):
-    """같은 부모 아래 lang=ko 요소 바로 뒤에 같은 태그의 lang=en, lang=zh-Hans 형제가 순서대로 오는지 검사."""
+    """같은 부모 아래 lang=ko 요소 바로 뒤에 같은 태그의 lang=en, lang=zh-Hans, lang=ja 형제가 순서대로 오는지 검사."""
 
     def __init__(self):
         super().__init__()
@@ -60,7 +60,7 @@ class _LangSets(HTMLParser):
                     i += len(LANGS)
                     continue
                 self.errors.append(
-                    f"line {line}: <{tag} lang=ko> 바로 뒤에 같은 태그의 lang=en, lang=zh-Hans 가 순서대로 없음")
+                    f"line {line}: <{tag} lang=ko> 바로 뒤에 같은 태그의 lang=en, lang=zh-Hans, lang=ja 가 순서대로 없음")
             elif lang in LANGS[1:]:
                 self.errors.append(f"line {line}: <{tag} lang={lang}> 가 lang=ko 로 시작하는 세트 밖에 있음")
             i += 1
@@ -138,7 +138,7 @@ def build(src: Path = SRC, out: Path = OUT) -> Path:
     html = (src / "index.html").read_text(encoding="utf-8")
     errors = check_lang_sets(html)
     if errors:
-        raise SystemExit("한/영/중 세트 오류:\n" + "\n".join(errors))
+        raise SystemExit("한/영/중/일 세트 오류:\n" + "\n".join(errors))
     n = count_placeholders(html)
     if n:
         print(f"경고: placeholder {n}곳 남음 — 공개본에서는 숨겨짐", file=sys.stderr)

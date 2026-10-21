@@ -1,4 +1,4 @@
-// dist/DirectorsCut.html → dist/DirectorsCut_KO.pdf, DirectorsCut_EN.pdf (폭 800px 긴 한 장)
+// dist/DirectorsCut.html → dist/DirectorsCut_{KO,EN,ZH,JA}.pdf (폭 800px 긴 한 장)
 // 실행: PW_CORE=C:/Users/1000125/AppData/Local/Temp/pw/node_modules/playwright-core node build/pdf.js
 const path = require("path");
 const { pathToFileURL } = require("url");
@@ -11,7 +11,7 @@ const PAGE = pathToFileURL(path.join(DIST, "DirectorsCut.html")).href;
 (async () => {
   const browser = await chromium.launch({ executablePath: CHROME });
   const page = await browser.newPage({ viewport: { width: 800, height: 1000 } });
-  for (const lang of ["ko", "en", "zh"]) {
+  for (const lang of ["ko", "en", "zh", "ja"]) {
     await page.goto(`${PAGE}?lang=${lang}`);
     await page.emulateMedia({ media: "print" });
     await page.evaluate(() => document.fonts.ready);

@@ -48,7 +48,9 @@ function lowContrast() {
 (async () => {
   fs.mkdirSync(SHOTS, { recursive: true });
   const browser = await chromium.launch({ executablePath: CHROME });
-  const ATTR = { ko: "ko", en: "en", zh: "zh-Hans" };
+  const ATTR = { ko: "ko", en: "en", zh: "zh-Hans", ja: "ja" };
+  // CJK 전용 폰트: 언어 → [font-family, 실제 렌더 폰트명 정규식] (Paperlogy에도 한자가 있어 섞일 수 있음)
+  const CJK = { zh: ["NotoSC", /Noto Sans SC/i], ja: ["NotoJP", /Noto Sans JP/i] };
   for (const lang of Object.keys(ATTR)) {
     const others = Object.entries(ATTR).filter(([k]) => k !== lang).map(([, v]) => v);
     for (const width of [800, 375]) {
@@ -65,24 +67,28 @@ function lowContrast() {
           overflow: document.documentElement.scrollWidth - window.innerWidth,
           leaked: [...document.querySelectorAll(others.map((o) => `body [lang="${o}"]`).join(","))].filter((e) => e.getClientRects().length).length,
           paperlogy: loaded("Paperlogy"),
-          notoSC: loaded("NotoSC"),
+          noto: { NotoSC: loaded("NotoSC"), NotoJP: loaded("NotoJP") },
           placeholders: [...document.querySelectorAll(".placeholder")].filter((e) => e.getClientRects().length).length,
         };
       }, others);
       check(r.overflow <= 0, `${tag}: 가로 넘침 없음 (${r.overflow}px)`);
       check(r.leaked === 0, `${tag}: 다른 언어 요소 노출 0 (${r.leaked})`);
       check(r.paperlogy === 3, `${tag}: Paperlogy 3웨이트 로드 (${r.paperlogy})`);
-      if (lang === "zh") {
-        check(r.notoSC === 3, `${tag}: NotoSC 3웨이트 로드 (${r.notoSC})`);
-        // 한자가 실제로 Noto Sans SC로 그려지는지 (Paperlogy에도 한자가 있어 섞일 수 있음)
+      if (CJK[lang]) {
+        const [fam, re] = CJK[lang];
+        check(r.noto[fam] === 3, `${tag}: ${fam} 3웨이트 로드 (${r.noto[fam]})`);
+        // 한자·가나가 실제로 해당 Noto 폰트로 그려지는지
         const cdp = await page.context().newCDPSession(page);
         await cdp.send("DOM.enable");
         await cdp.send("CSS.enable");
         const { root } = await cdp.send("DOM.getDocument");
-        const { nodeId } = await cdp.send("DOM.querySelector", { nodeId: root.nodeId, selector: '.lede[lang="zh-Hans"]' });
+        const { nodeId } = await cdp.send("DOM.querySelector", { nodeId: root.nodeId, selector: `.lede[lang="${ATTR[lang]}"]` });
         const { fonts } = await cdp.send("CSS.getPlatformFontsForNode", { nodeId });
         const names = fonts.map((f) => `${f.familyName}:${f.glyphCount}`).join(", ");
-        check(fonts.some((f) => /Noto Sans SC/i.test(f.familyName) && f.glyphCount > 20), `${tag}: 중문 본문이 Noto Sans SC로 렌더 (${names})`);
+        check(fonts.some((f) => re.test(f.familyName) && f.glyphCount > 20), `${tag}: 본문이 ${re.source}로 렌더 (${names})`);
+        // 다른 CJK 폰트가 섞이지 않는지
+        const other = Object.entries(CJK).filter(([k]) => k !== lang).map(([, [, o]]) => o);
+        check(!fonts.some((f) => other.some((o) => o.test(f.familyName))), `${tag}: 다른 CJK 폰트 섞임 없음 (${names})`);
       }
       check(r.placeholders === 0, `${tag}: placeholder 숨김`);
       check(external.length === 0, `${tag}: 외부 요청 0 (${external.join(", ")})`);
@@ -95,7 +101,7 @@ function lowContrast() {
   }
   await browser.close();
 
-  for (const lang of ["KO", "EN", "ZH"]) {
+  for (const lang of ["KO", "EN", "ZH", "JA"]) {
     const file = path.join(DIST, `DirectorsCut_${lang}.pdf`);
     const pdf = fs.readFileSync(file).toString("latin1");
     const pages = (pdf.match(/\/Type\s*\/Page(?!s)/g) || []).length;
@@ -104,6 +110,7 @@ function lowContrast() {
     check(uris >= 5, `${lang} PDF: 링크 보존 (${uris}개)`);
     check(pdf.includes("Paperlogy"), `${lang} PDF: Paperlogy 내장`);
     if (lang === "ZH") check(pdf.includes("NotoSansSC"), `${lang} PDF: Noto Sans SC 내장`);
+    if (lang === "JA") check(pdf.includes("NotoSansJP"), `${lang} PDF: Noto Sans JP 내장`);
   }
 
   console.log(fails.length ? `\n${fails.length}건 실패` : "\n전부 통과");

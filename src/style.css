@@ -5,6 +5,10 @@
 @font-face{font-family:"NotoSC";font-weight:400;src:url("../../Font/NotoSansSC-Regular.ttf");unicode-range:U+2E80-2FFF,U+3000-303F,U+3400-4DBF,U+4E00-9FFF,U+F900-FAFF,U+FF00-FFEF}
 @font-face{font-family:"NotoSC";font-weight:600;src:url("../../Font/NotoSansSC-SemiBold.ttf");unicode-range:U+2E80-2FFF,U+3000-303F,U+3400-4DBF,U+4E00-9FFF,U+F900-FAFF,U+FF00-FFEF}
 @font-face{font-family:"NotoSC";font-weight:800;src:url("../../Font/NotoSansSC-ExtraBold.ttf");unicode-range:U+2E80-2FFF,U+3000-303F,U+3400-4DBF,U+4E00-9FFF,U+F900-FAFF,U+FF00-FFEF}
+/* 일문은 같은 한자라도 자형이 달라 Noto Sans JP로 — 가나(U+3040-30FF)까지 포함 */
+@font-face{font-family:"NotoJP";font-weight:400;src:url("../../Font/NotoSansJP-Regular.ttf");unicode-range:U+2E80-2FFF,U+3000-30FF,U+3400-4DBF,U+4E00-9FFF,U+F900-FAFF,U+FF00-FFEF}
+@font-face{font-family:"NotoJP";font-weight:600;src:url("../../Font/NotoSansJP-SemiBold.ttf");unicode-range:U+2E80-2FFF,U+3000-30FF,U+3400-4DBF,U+4E00-9FFF,U+F900-FAFF,U+FF00-FFEF}
+@font-face{font-family:"NotoJP";font-weight:800;src:url("../../Font/NotoSansJP-ExtraBold.ttf");unicode-range:U+2E80-2FFF,U+3000-30FF,U+3400-4DBF,U+4E00-9FFF,U+F900-FAFF,U+FF00-FFEF}
 
 :root{
   --navy:#1b1d3a; --navy-2:#16182f; --navy-line:#2c2f52;
@@ -15,14 +19,17 @@
 *{box-sizing:border-box}
 html{color-scheme:light}
 body{margin:0;background:var(--navy);color:var(--ink);font-family:"NotoSC","Paperlogy",system-ui,sans-serif;font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased;word-break:keep-all;overflow-wrap:break-word}
-html[data-lang="ko"] :is([lang="en"],[lang="zh-Hans"]),
-html[data-lang="en"] :is([lang="ko"],[lang="zh-Hans"]),
-html[data-lang="zh"] :is([lang="ko"],[lang="en"]){display:none!important}
-[lang="zh-Hans"]{word-break:normal;line-break:strict} /* keep-all은 띄어쓰기 없는 중문을 한 덩어리로 묶는다 */
+html[data-lang="ko"] :is([lang="en"],[lang="zh-Hans"],[lang="ja"]),
+html[data-lang="en"] :is([lang="ko"],[lang="zh-Hans"],[lang="ja"]),
+html[data-lang="zh"] :is([lang="ko"],[lang="en"],[lang="ja"]),
+html[data-lang="ja"] :is([lang="ko"],[lang="en"],[lang="zh-Hans"]){display:none!important}
+html[data-lang="ja"] body{font-family:"NotoJP","Paperlogy",system-ui,sans-serif}
+:is([lang="zh-Hans"],[lang="ja"]){word-break:normal;line-break:strict} /* keep-all은 띄어쓰기 없는 중문·일문을 한 덩어리로 묶는다 */
 .page{max-width:800px;margin:0 auto;background:#fff}
 .wrap{padding:0 48px}
 a{color:inherit}
 p{margin:0 0 14px}
+html[data-lang="ja"] code{font-family:ui-monospace,Consolas,"NotoJP","Paperlogy",monospace}
 code{font-family:ui-monospace,Consolas,"NotoSC","Paperlogy",monospace;font-size:.9em;background:var(--soft);border:1px solid var(--line);border-radius:5px;padding:1px 6px}
 .placeholder{display:none}
 .nowrap{white-space:nowrap}
